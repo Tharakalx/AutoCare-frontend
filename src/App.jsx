@@ -1,11 +1,11 @@
-import { useState } from 'react'
 
 
 import './App.css'
 import SignIn from './pages/SignIn'
-import VehiclePage from './pages/VehiclePage'
 
-
+import OurServices from './pages/OurServices'
+import Appointments from './pages/Appointments'
+import AdminDashboard  from './pages/AdminDashboard'
 
 function App() {
   
@@ -13,16 +13,8 @@ function App() {
   return (
     <>
 
-    
-  
-    
-    <VehiclePage />
-
-  
-   
-     
     </>
-  )
+  )   
 }
 
 export default App
