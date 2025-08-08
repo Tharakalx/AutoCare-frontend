@@ -5,6 +5,11 @@ import './App.css'
 import SignIn from './pages/SignIn'
 import RegisterPage from './pages/Register'
 import HomePage from './pages/HomePage';
+import OurServices from './pages/OurServices'
+import Appointments from './pages/Appointments'
+import AdminDashboard  from './pages/AdminDashboard'
+
+
 
 function App() {
 
