@@ -8,21 +8,26 @@ import HomePage from './pages/HomePage';
 import OurServices from './pages/OurServices'
 import Appointments from './pages/Appointments'
 import AdminDashboard  from './pages/AdminDashboard'
+import VehiclePage from './pages/VehiclePage';  
 
 
 
 function App() {
 
   return (
-    <>
-    <HomePage />
+    
+    
     
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/services" element={<OurServices />} />
+      <Route path="/appointments" element={<Appointments />} />
+      <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      <Route path="/vehiclepage" element={<VehiclePage />} />
     </Routes>
-    </>
+    
 
   );
 }

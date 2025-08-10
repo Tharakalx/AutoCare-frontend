@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiEdit2, FiTrash2, FiX, FiInfo, FiCalendar, FiDollarSign, FiTool, FiAlertTriangle } from 'react-icons/fi';
+import Navbar from '../components/NavBar';
+import Footer from '../components/Footer';
 
 const VehiclePage = () => {
   // Service schedule configuration (mileage intervals in km)
@@ -201,6 +203,9 @@ const VehiclePage = () => {
   };
 
   return (
+    <>
+    <Navbar
+    />
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -669,6 +674,8 @@ const VehiclePage = () => {
         </div>
       )}
     </div>
+    <Footer />
+    </>
   );
 };
 

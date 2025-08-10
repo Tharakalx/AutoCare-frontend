@@ -2,6 +2,7 @@
 import {  FaCar } from 'react-icons/fa';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 
 export default function SignIn() {
@@ -82,9 +83,9 @@ export default function SignIn() {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?{' '}
-            <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
               Sign up now
-            </a>
+            </Link>
           </p>
         </div>
       </div>

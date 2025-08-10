@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { FaCar } from 'react-icons/fa';
+import Navbar from '../components/NavBar';
+import Footer from '../components/Footer';
 
 export default function Appointments() {
   const services = [
@@ -251,17 +254,14 @@ export default function Appointments() {
   }, [selectedDate, selectedTime, selectedServices, selectedCombo, description]);
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 py-12 px-4">
       <header className="flex justify-center items-center max-w-7xl mx-auto mb-10">
         <div className="flex items-center gap-4">
-          <img
-            alt="AutoCare Logo"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-12 w-auto"
-            onError={(e) => { e.target.src = 'https://picsum.photos/200'; }}
-          />
+          <FaCar className="text-indigo-600 text-3xl mr-2 " />
           <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent tracking-tight">
-            AutoCare Appointments
+            Book a New Appointment
           </h1>
         </div>
       </header>
@@ -474,5 +474,7 @@ export default function Appointments() {
         </button>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

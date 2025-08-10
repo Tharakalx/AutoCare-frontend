@@ -1,3 +1,8 @@
+import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
+import Navbar from "../components/NavBar";
+import { FaCar } from 'react-icons/fa';
+
 export default function OurServices() {
   const services = [
     {
@@ -85,11 +90,11 @@ export default function OurServices() {
       image: "https://www.popularmaruti.com/blog/wp-content/uploads/2022/08/wheels.jpg",
     },
     {
-  name: "Engine Tune-Up",
-  description: "Optimize your vehicle's performance with our comprehensive engine tune-up service.",
-  price: 24000,
-  image: "https://omegaautocare.com/wp-content/uploads/2023/02/car-tune-up-basics.jpg"
-}
+      name: "Engine Tune-Up",
+      description: "Optimize your vehicle's performance with our comprehensive engine tune-up service.",
+      price: 24000,
+      image: "https://omegaautocare.com/wp-content/uploads/2023/02/car-tune-up-basics.jpg"
+    }
   ];
 
   const comboPackages = [
@@ -102,7 +107,7 @@ export default function OurServices() {
     },
     {
       name: "Complete Care Package",
-      services: ["Oil Change", "Brake Service", "Wheel Alignment", "Air Conditioning","Full Body Wash"],
+      services: ["Oil Change", "Brake Service", "Wheel Alignment", "Air Conditioning", "Full Body Wash"],
       price: 279.99,
       originalPrice: 319.96,
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-tmwcIHAsBwvZxYsVTwvt22VGbZiX8EwasQ&s",
@@ -117,73 +122,70 @@ export default function OurServices() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4">
-      {/* Header */}
-      <header className="flex items-center justify-between max-w-7xl mx-auto mb-8">
-        <button className="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
-          Back
-        </button>
-        <div className="flex items-center gap-3">
-          <img
-            alt="AutoCare Logo"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-10 w-auto"
-          />
-          <h1 className="text-3xl font-bold text-gray-900">AutoCare Systems</h1>
-        </div>
-        <button className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Next
-        </button>
-      </header>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4">
+        {/* Header */}
+        <header className="flex items-center justify-between max-w-7xl mx-auto mb-8">
 
-      {/* Services Section */}
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Our Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg shadow-md bg-white overflow-hidden">
-              <img src={service.image} alt={service.name} className="w-full h-48 object-cover" />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900">{service.name}</h3>
-                <p className="mt-2 text-gray-600">{service.description}</p>
-                <p className="mt-4 text-lg font-bold text-indigo-600">Rs.{service.price.toFixed(2)}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Combo Packages Section */}
-      <div className="max-w-7xl mx-auto mt-12">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Combo Packages</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {comboPackages.map((pkg, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg shadow-md bg-white overflow-hidden">
-              <img src={pkg.image} alt={pkg.name} className="w-full h-48 object-cover" />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900">{pkg.name}</h3>
-                <ul className="mt-2 text-gray-600 list-disc list-inside">
-                  {pkg.services.map((service, i) => (
-                    <li key={i}>{service}</li>
-                  ))}
-                </ul>
-                <div className="mt-4">
-                  <p className="text-lg font-bold text-indigo-600">Rs.{pkg.price.toFixed(2)}</p>
-                  <p className="text-sm text-gray-500 line-through">Rs.{pkg.originalPrice.toFixed(2)}</p>
+          <div className="flex items-center">
+            <FaCar className="text-blue-600 text-2xl mr-2" />
+            <span className="text-3xl font-bold text-gray-800">AutoCare Systems </span>
+          </div>
+
+        </header>
+
+        {/* Services Section */}
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Our Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <div key={index} className="border border-gray-200 rounded-lg shadow-md bg-white overflow-hidden">
+                <img src={service.image} alt={service.name} className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900">{service.name}</h3>
+                  <p className="mt-2 text-gray-600">{service.description}</p>
+                  <p className="mt-4 text-lg font-bold text-indigo-600">Rs.{service.price.toFixed(2)}</p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* Combo Packages Section */}
+        <div className="max-w-7xl mx-auto mt-12">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Combo Packages</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {comboPackages.map((pkg, index) => (
+              <div key={index} className="border border-gray-200 rounded-lg shadow-md bg-white overflow-hidden">
+                <img src={pkg.image} alt={pkg.name} className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900">{pkg.name}</h3>
+                  <ul className="mt-2 text-gray-600 list-disc list-inside">
+                    {pkg.services.map((service, i) => (
+                      <li key={i}>{service}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-4">
+                    <p className="text-lg font-bold text-indigo-600">Rs.{pkg.price.toFixed(2)}</p>
+                    <p className="text-sm text-gray-500 line-through">Rs.{pkg.originalPrice.toFixed(2)}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Call to Action */}
+        <div className="max-w-7xl mx-auto mt-12 text-center">
+          <p className="text-lg text-gray-600 mb-4">Ready to book your service? Sign up now to get started!</p>
+          <button className="rounded-md bg-indigo-600 px-6 py-3 text-lg font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <Link to="/register">Sign Up Now</Link>
+          </button>
         </div>
       </div>
-
-      {/* Footer Call to Action */}
-      <div className="max-w-7xl mx-auto mt-12 text-center">
-        <p className="text-lg text-gray-600 mb-4">Ready to book your service? Sign up now to get started!</p>
-        <button className="rounded-md bg-indigo-600 px-6 py-3 text-lg font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Sign Up Now
-        </button>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }
