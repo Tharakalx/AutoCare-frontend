@@ -26,9 +26,9 @@ const CustomerDashboard = () => {
     year: '',
     fuelType: 'petrol',
     color: '#3b82f6',
-    mileage: '0',
+    mileage: '',
     regNo: '',
-    lastServiceMileage: '0',
+    lastServiceMileage: '',
     lastServiceDate: ''
   });
 
@@ -39,6 +39,7 @@ const CustomerDashboard = () => {
   const [activeTab, setActiveTab] = useState('vehicles');
   const [serviceHistory, setServiceHistory] = useState([]);
   const [upcomingServices, setUpcomingServices] = useState([]);
+  const [formErrors, setFormErrors] = useState({});
 
   // Load initial data (will be replaced with database calls)
   useEffect(() => {
@@ -115,27 +116,79 @@ const CustomerDashboard = () => {
   const handleVehicleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
-  const saveVehicle = async () => {
+  // Validate form
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formData.make.trim()) errors.make = 'Make is required';
+    if (!formData.model.trim()) errors.model = 'Model is required';
+    if (!formData.year) errors.year = 'Year is required';
+    if (!formData.regNo.trim()) errors.regNo = 'Registration number is required';
+    if (!formData.mileage) errors.mileage = 'Mileage is required';
+
+    // Validate year range
+    if (formData.year) {
+      const currentYear = new Date().getFullYear();
+      const yearNum = parseInt(formData.year);
+      if (yearNum < 1900 || yearNum > currentYear + 1) {
+        errors.year = `Year must be between 1900 and ${currentYear + 1}`;
+      }
+    }
+
+    // Validate mileage
+    if (formData.mileage && parseInt(formData.mileage) < 0) {
+      errors.mileage = 'Mileage cannot be negative';
+    }
+
+    // Validate registration number format (optional)
+    if (formData.regNo && !/^[A-Za-z0-9-]+$/.test(formData.regNo)) {
+      errors.regNo = 'Registration number contains invalid characters';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const saveVehicle = () => {
+    // Validate form before saving
+    if (!validateForm()) {
+      alert('Please fix the form errors before saving.');
+      return;
+    }
+
     const vehicleData = {
       ...formData,
       mileage: formData.mileage || '0',
-      lastServiceMileage: formData.lastServiceMileage || '0'
+      lastServiceMileage: formData.lastServiceMileage || '0',
+      lastServiceDate: formData.lastServiceDate || ''
     };
 
     try {
-      if (isEditingVehicle) {
+      if (isEditingVehicle && selectedVehicle) {
+        // Update existing vehicle
         // await api.updateVehicle(vehicleData);
         setVehicles(vehicles.map(v => v.regNo === selectedVehicle.regNo ? vehicleData : v));
+        alert('Vehicle updated successfully!');
       } else {
+        // Add new vehicle - check for duplicate registration number
+        if (vehicles.some(v => v.regNo === vehicleData.regNo)) {
+          alert('A vehicle with this registration number already exists!');
+          return;
+        }
         // await api.addVehicle(vehicleData);
-        setVehicles([...vehicles, vehicleData]);
+        setVehicles([...vehicles, { ...vehicleData, id: Date.now() }]);
+        alert('Vehicle added successfully!');
       }
       resetVehicleForm();
     } catch (error) {
-      alert('Failed to save vehicle');
       console.error('Vehicle save error:', error);
+      alert('Failed to save vehicle. Please try again.');
     }
   };
 
@@ -146,17 +199,18 @@ const CustomerDashboard = () => {
       year: '',
       fuelType: 'petrol',
       color: '#3b82f6',
-      mileage: '0',
+      mileage: '',
       regNo: '',
-      lastServiceMileage: '0',
+      lastServiceMileage: '',
       lastServiceDate: ''
     });
+    setFormErrors({});
     setIsEditingVehicle(false);
     setSelectedVehicle(null);
   };
 
   const deleteVehicle = async (regNo) => {
-    if (window.confirm('Delete this vehicle?')) {
+    if (window.confirm('Are you sure you want to delete this vehicle?')) {
       try {
         // await api.deleteVehicle(regNo);
         setVehicles(vehicles.filter(v => v.regNo !== regNo));
@@ -164,6 +218,7 @@ const CustomerDashboard = () => {
           resetVehicleForm();
           setViewMode(false);
         }
+        alert('Vehicle deleted successfully!');
       } catch (error) {
         alert('Failed to delete vehicle');
         console.error('Vehicle delete error:', error);
@@ -458,7 +513,7 @@ const CustomerDashboard = () => {
                   </div>
                 </div>
 
-                <form className="space-y-5">
+                <div className="space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Make */}
                     <div>
@@ -468,9 +523,10 @@ const CustomerDashboard = () => {
                         name="make"
                         value={formData.make}
                         onChange={handleVehicleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className={`w-full px-4 py-2 border ${formErrors.make ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
                         required
                       />
+                      {formErrors.make && <p className="mt-1 text-sm text-red-600">{formErrors.make}</p>}
                     </div>
 
                     {/* Model */}
@@ -481,9 +537,10 @@ const CustomerDashboard = () => {
                         name="model"
                         value={formData.model}
                         onChange={handleVehicleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className={`w-full px-4 py-2 border ${formErrors.model ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
                         required
                       />
+                      {formErrors.model && <p className="mt-1 text-sm text-red-600">{formErrors.model}</p>}
                     </div>
 
                     {/* Year */}
@@ -496,9 +553,10 @@ const CustomerDashboard = () => {
                         onChange={handleVehicleChange}
                         min="1900"
                         max={new Date().getFullYear() + 1}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className={`w-full px-4 py-2 border ${formErrors.year ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
                         required
                       />
+                      {formErrors.year && <p className="mt-1 text-sm text-red-600">{formErrors.year}</p>}
                     </div>
 
                     {/* Registration Number */}
@@ -509,10 +567,11 @@ const CustomerDashboard = () => {
                         name="regNo"
                         value={formData.regNo}
                         onChange={handleVehicleChange}
-                        className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${isEditingVehicle && selectedVehicle ? 'bg-gray-100' : ''}`}
+                        className={`w-full px-4 py-2 border ${formErrors.regNo ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${isEditingVehicle && selectedVehicle ? 'bg-gray-100' : ''}`}
                         required
                         disabled={isEditingVehicle && selectedVehicle}
                       />
+                      {formErrors.regNo && <p className="mt-1 text-sm text-red-600">{formErrors.regNo}</p>}
                     </div>
 
                     {/* Current Mileage */}
@@ -524,9 +583,10 @@ const CustomerDashboard = () => {
                         value={formData.mileage}
                         onChange={handleVehicleChange}
                         min="0"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className={`w-full px-4 py-2 border ${formErrors.mileage ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
                         required
                       />
+                      {formErrors.mileage && <p className="mt-1 text-sm text-red-600">{formErrors.mileage}</p>}
                     </div>
 
                     {/* Fuel Type */}
@@ -598,7 +658,7 @@ const CustomerDashboard = () => {
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             )}
           </div>
