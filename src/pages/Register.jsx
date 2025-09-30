@@ -2,10 +2,13 @@ import { FaUser, FaEnvelope, FaLock, FaPhone, FaCar } from 'react-icons/fa';
 import { useState } from 'react';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link , useNavigate} from 'react-router-dom';
+
+import apiClient from '../api/client';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -39,16 +42,23 @@ const RegisterPage = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
+const regData = {
+  
+  username: formData.username,
+  password: formData.password,
+  fullName: formData.name,
+  email: formData.email,
+  contactNo: formData.contactNo,
+};
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       // Submit form data
-      axios.post('http://localhost:5050/api/v1/user', formData)
+      apiClient.post('auth/register', regData)
       .then(response => {
         // 5. Handle successful submission
         console.log('Registration successful:', response.data);
-        console.log('Form submitted:', formData);
+        console.log('Form submitted:', regData);
         alert('Registration successful!');
         
         // 6. Reset form after successful submission
@@ -61,7 +71,7 @@ const RegisterPage = () => {
         });
         
         // 7. Redirect user (optional)
-        navigate('/signinin');
+        navigate('/SignIn');
       })
       .catch(error => {
         // 8. Handle submission errors
