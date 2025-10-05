@@ -27,7 +27,7 @@ const Navbar = () => {
                         <FaCalendarAlt className="mr-1.5" /> <Link to="/appointments" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">Book Service</Link>
 
 
-                        <FaUserCircle className="mr-1.5" /> <Link to="/vehiclepage" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">My Vehicles</Link>
+                        <FaUserCircle className="mr-1.5" /> <Link to="/profile" className="flex items-center text-gray-700 hover:text-blue-600 transition-colors">My Profile</Link>
 
                         <a href="#" className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
                             <FaPhone className="mr-1.5" /> (+94) 786855633

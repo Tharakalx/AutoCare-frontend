@@ -8,7 +8,8 @@ import HomePage from './pages/HomePage';
 import OurServices from './pages/OurServices'
 import Appointments from './pages/Appointments'
 import AdminDashboard  from './pages/AdminDashboard'
-import VehiclePage from './pages/VehiclePage';  
+import ProfilePage from './pages/ProfilePage';
+// import VehiclePage from './pages/VehiclePage';  
 
 
 
@@ -25,7 +26,8 @@ function App() {
       <Route path="/services" element={<OurServices />} />
       <Route path="/appointments" element={<Appointments />} />
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      <Route path="/vehiclepage" element={<VehiclePage />} />
+      {/* <Route path="/vehiclepage" element={<VehiclePage />} /> */}
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
     
 

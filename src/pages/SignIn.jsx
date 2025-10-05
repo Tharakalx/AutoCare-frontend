@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import apiClient from '../api/client';
 
+
 export default function SignIn() {
   const navigate = useNavigate();
 
@@ -36,7 +37,8 @@ export default function SignIn() {
       localStorage.setItem("token", response.data.token);
 
       alert("Login successful!");
-      navigate("/VehiclePage"); // 👈 redirect to VehiclePage
+      // navigate("/VehiclePage");
+      navigate("/profile");// 👈 redirect to profilePage
     } catch (err) {
       console.error("Login failed:", err);
       if (err.response) {

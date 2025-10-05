@@ -3,8 +3,9 @@ import { useState } from 'react';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
 import { Link , useNavigate} from 'react-router-dom';
-
 import apiClient from '../api/client';
+
+
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const regData = {
   password: formData.password,
   fullName: formData.name,
   email: formData.email,
-  contactNo: formData.contactNo,
+  contactNo: formData.phone,
 };
   const handleSubmit = (e) => {
     e.preventDefault();

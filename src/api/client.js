@@ -6,6 +6,7 @@ const apiClient = axios.create({
    withCredentials: true, // Gateway service URL
 });
 
+
 // Add JWT token to every request if available
 apiClient.interceptors.request.use(
   (config) => {
@@ -19,5 +20,6 @@ apiClient.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 
 export default apiClient;
