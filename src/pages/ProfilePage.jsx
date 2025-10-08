@@ -10,16 +10,16 @@ import {
   FaHistory,
   FaCog,
   FaBell,
-
   FaPlus,
   FaTools,
 } from "react-icons/fa";
-import { FaShield } from "react-icons/fa6"; // or from fa6
-
+import { FaShield } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { FaSignOutAlt } from "react-icons/fa";
 import VehiclesSection from "./VehiclesSection";
+import AppointmentsSection from "./AppointmentsSection";
+import Footer from "../components/Footer";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -85,7 +85,10 @@ export default function ProfilePage() {
           time: '10:00 AM',
           vehicleName: 'Toyota Camry',
           mechanicName: 'Mike Johnson',
-          status: 'confirmed'
+          status: 'confirmed',
+          vehicleId: 1,
+          mechanicId: 1,
+          notes: 'Please use synthetic oil'
         },
         {
           id: 2,
@@ -94,7 +97,9 @@ export default function ProfilePage() {
           time: '2:00 PM',
           vehicleName: 'Honda Civic',
           mechanicName: 'Sarah Wilson',
-          status: 'pending'
+          status: 'pending',
+          vehicleId: 2,
+          mechanicId: 2
         }
       ];
       setAppointments(mockAppointments);
@@ -133,6 +138,7 @@ export default function ProfilePage() {
     const { name, value } = e.target;
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleLogout = () => {
     // Clear local storage
     localStorage.removeItem("token");
@@ -140,9 +146,6 @@ export default function ProfilePage() {
 
     // Redirect to login page
     navigate("/signin");
-
-    // Optional: Show logout message
-    // You can add a toast notification here if you have one
   };
 
   const handleSave = async () => {
@@ -190,7 +193,7 @@ export default function ProfilePage() {
       case "profile":
         return renderProfileSection();
       case "vehicles":
-        return  <VehiclesSection vehicles={vehicles} />;
+        return <VehiclesSection vehicles={vehicles} />;
       case "appointments":
         return renderAppointmentsSection();
       case "history":
@@ -337,60 +340,12 @@ export default function ProfilePage() {
     </div>
   );
 
-
-
+  // Updated appointments section to use the new component
   const renderAppointmentsSection = () => (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">My Appointments</h1>
-          <p className="text-gray-600 mt-2">View and manage your service appointments</p>
-        </div>
-        <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2">
-          <FaPlus /> Book Appointment
-        </button>
-      </div>
-
-      {appointments.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
-          <FaCalendarAlt className="text-gray-400 text-8xl mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No appointments scheduled</h3>
-          <p className="text-gray-500 mb-6">Book your first service appointment</p>
-          <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition">
-            Book Your First Appointment
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {appointments.map((appointment) => (
-            <div key={appointment.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="font-bold text-xl text-gray-900">{appointment.serviceType}</h3>
-                  <p className="text-gray-600 text-lg">{appointment.date} at {appointment.time}</p>
-                  <p className="text-gray-500 mt-1">Vehicle: {appointment.vehicleName}</p>
-                  <p className="text-gray-500">Mechanic: {appointment.mechanicName}</p>
-                </div>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                  appointment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
-                  }`}>
-                  {appointment.status}
-                </span>
-              </div>
-              <div className="flex gap-3">
-                <button className="flex-1 bg-gray-100 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-200 transition">
-                  Reschedule
-                </button>
-                <button className="flex-1 bg-red-100 text-red-700 px-4 py-3 rounded-lg hover:bg-red-200 transition">
-                  Cancel Appointment
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <AppointmentsSection 
+      appointments={appointments} 
+      onAppointmentsUpdate={setAppointments}
+    />
   );
 
   const renderServiceHistorySection = () => (
@@ -578,6 +533,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
