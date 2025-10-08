@@ -19,6 +19,7 @@ import { FaShield } from "react-icons/fa6"; // or from fa6
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { FaSignOutAlt } from "react-icons/fa";
+import VehiclesSection from "./VehiclesSection";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -189,7 +190,7 @@ export default function ProfilePage() {
       case "profile":
         return renderProfileSection();
       case "vehicles":
-        return renderVehiclesSection();
+        return  <VehiclesSection vehicles={vehicles} />;
       case "appointments":
         return renderAppointmentsSection();
       case "history":
@@ -336,67 +337,7 @@ export default function ProfilePage() {
     </div>
   );
 
-  const renderVehiclesSection = () => (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">My Vehicles</h1>
-          <p className="text-gray-600 mt-2">Manage your registered vehicles and service schedules</p>
-        </div>
-        <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2">
-          <FaPlus /> Add Vehicle
-        </button>
-      </div>
 
-      {vehicles.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-200">
-          <FaCar className="text-gray-400 text-8xl mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No vehicles added yet</h3>
-          <p className="text-gray-500 mb-6">Add your first vehicle to get started with our services</p>
-          <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition">
-            Add Your First Vehicle
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="font-bold text-xl text-gray-900">{vehicle.make} {vehicle.model}</h3>
-                  <p className="text-gray-600">{vehicle.year} • {vehicle.licensePlate}</p>
-                </div>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${vehicle.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                  {vehicle.status}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Last Service:</span>
-                  <span className="text-gray-900">{vehicle.lastServiceDate}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Next Service Due:</span>
-                  <span className="text-orange-600 font-medium">In 30 days</span>
-                </div>
-              </div>
-
-              <div className="mt-6 flex gap-2">
-                <button className="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition text-sm">
-                  View Details
-                </button>
-                <button className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm">
-                  Book Service
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
 
   const renderAppointmentsSection = () => (
     <div className="space-y-8">
