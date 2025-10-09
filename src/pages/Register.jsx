@@ -1,7 +1,7 @@
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaCar } from 'react-icons/fa';
 import { useState } from 'react';
-import Navbar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Navbar from '../components/Navbar.jsx'
+import Footer from '../components/Footer.jsx';
 import { Link , useNavigate} from 'react-router-dom';
 import apiClient from '../api/client';
 

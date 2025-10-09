@@ -1,7 +1,7 @@
 
 import { FaCar } from 'react-icons/fa';
-import Navbar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Navbar from '../components/Navbar.jsx';
+import Footer from '../components/Footer.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import apiClient from '../api/client';

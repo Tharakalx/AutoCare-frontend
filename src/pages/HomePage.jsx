@@ -1,6 +1,6 @@
 import { FaBell, FaCar, FaTools, FaCalendarAlt, FaHistory, FaChartLine, FaShieldAlt, FaCheckCircle } from 'react-icons/fa';
-import Navbar from '../components/NavBar';
-import Footer from '../components/Footer';
+import Navbar from '../components/Navbar.jsx';
+import Footer from '../components/Footer.jsx';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {

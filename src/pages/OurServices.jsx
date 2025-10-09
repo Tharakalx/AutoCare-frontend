@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import Navbar from "../components/NavBar";
+import Footer from "../components/Footer.jsx";
+import Navbar from "../components/Navbar.jsx";
 import { FaCar } from 'react-icons/fa';
 
 export default function OurServices() {
